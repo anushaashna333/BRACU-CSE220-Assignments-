@@ -1,0 +1,29 @@
+//LAB TASK 1
+
+public static Integer[] mergeSortedArray( Integer[] arr1, Integer[] arr2 ){
+        Integer merged [] = new Integer [arr1.length + arr2.length];
+        int  c = 0; 
+        for(int i=0; i<arr1.length; i++ ){
+            merged[i] = arr1[i];
+        }
+        for(int i=arr1.length; i<merged.length; i++ ){
+            merged[i] = arr2[c];
+            c++;
+        }
+        
+        Integer temp = 0;
+        for(int j=0; j<merged.length; j++){
+            for(int k=j+1; k<merged.length; k++){
+                if(merged[j]>merged[k]){
+                    temp = merged[j];
+                    merged[j] = merged[k];
+                    merged[k] = temp;
+                    break;
+                }
+            }
+        }
+        return merged;
+    }
+
+
+//LAB TASK 2
