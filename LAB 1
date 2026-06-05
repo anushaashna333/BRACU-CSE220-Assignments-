@@ -27,6 +27,7 @@ public static Integer[] mergeSortedArray( Integer[] arr1, Integer[] arr2 ){
 
 
 //LAB TASK 2
+
 public static Integer[][] compressMatrix( Integer[][] matrix ){
         //TO DO
         int row  = matrix.length;
@@ -62,4 +63,100 @@ public static Integer[][] compressMatrix( Integer[][] matrix ){
             }
         }
         return new_mat;
-    }                                                                                                                                                               // Lab Task-3
+    }                                                                                                                                                               
+
+
+//LAB TASK 3
+public static void playGame( Integer[][] arena ){       
+        //TO DO
+        int row = arena.length;
+        int col = arena[0].length;
+        int point = 0;
+        for(int i=0; i<row; i++){
+            for(int j=0; j<col; j++){
+                if(arena[i][j]!=0 && arena[i][j]%50==0){
+                    if(arena[i][j]!=arena[0][j] && arena[i-1][j]==2){ //above
+                        point+=2;  
+                    }
+                     if(arena[i][j]!=arena[row-1][j]  && arena[i+1][j]==2){ //below
+                        point+=2;  
+                     }
+                    if(arena[i][j]!=arena[i][0] && arena[i][j-1]==2){ //left
+                        point+=2;  
+                    }
+                    if(arena[i][j]!=arena[i][col-1] && arena[i][j+1]==2){ //right
+                        point+=2;  
+                    }
+                }
+            }
+        }
+      
+      if(point>=10){
+        System.out.println("Points Gained:  "+point+". Your team has survived the game.");
+      }
+      else{
+        System.out.println("Points Gained:  "+point+". Your team is out.");
+      }
+    }
+
+//LAB TASK 4
+
+public static void rotateSecret( Character[][] board ){
+        //TO DO
+        int row = board.length;
+        int col = board[0].length;
+        int min_row = 0;
+        int max_row = row-1;
+        int min_col = 0;
+        int max_col = col-1;
+        int rotation = row/2;
+        Character temp = 't';
+        String word = "";
+
+        int count = 1;
+        while(count<=rotation){  //outer to inner layer
+            //top wall
+            for(int i=min_col;i<max_col;i++){
+                temp = board[min_row][i+1];
+                board[min_row][i+1] = board[min_row][min_col];
+                board[min_row][min_col] = temp;
+            }
+            //right wall
+            for(int j=min_row;j<max_row;j++){
+                temp = board[j+1][max_col];
+                board[j+1][max_col] = board[min_row][min_col];
+                board[min_row][min_col] = temp;
+            }
+            //bottom wall
+            for(int k=max_col;k>min_col;k--){
+                temp = board[max_row][k-1];
+                board[max_row][k-1] = board[min_row][min_col];
+                board[min_row][min_col] = temp;
+            }
+            //left wall
+            for(int z=max_row;z>min_row;z--){
+                temp = board[z-1][min_col];
+                board[z-1][min_col] = board[min_row][min_col];
+                board[min_row][min_col] = temp;
+            }
+
+            if(count==rotation){
+                rotation--;
+                count=1;
+                min_row += 1;
+                max_row -= 1;
+                min_col += 1;
+                max_col -= 1;
+            }
+            else{
+                count++;
+            }
+        }
+        
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                word+=word;
+            }
+        }
+        System.out.println(word);
+    }
