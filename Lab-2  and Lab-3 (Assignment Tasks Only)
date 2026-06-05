@@ -4,7 +4,6 @@ Lab-3 file Link: https://docs.google.com/document/d/1LZ6dbxa9jp7rUEpIoyTiNCnepcx
 **Please note that both lab-2 and lab-3 assignments were submitted together in a single file, so I created a single file for them here.
 
 //Lab-2
-
 //Assignment Task-1
 
 public static String checkSimilar( Node building1, Node building2 ){   
