@@ -1,0 +1,225 @@
+Lab-2 file Link: https://docs.google.com/document/d/1FeL-FQoHuCGJZMYxqSMfYKAqTAD7ztzt/edit#heading=h.gkww4rrcsyrr
+Lab-3 file Link: https://docs.google.com/document/d/1LZ6dbxa9jp7rUEpIoyTiNCnepcxc4pLM/edit#heading=h.gkww4rrcsyrr
+
+**Please note that both lab-2 and lab-3 assignments were submitted together in a single file, so I created a single file for them here.
+
+//Lab-2
+
+//Assignment Task-1
+
+public static String checkSimilar( Node building1, Node building2 ){   
+        //TO DO
+        Node temp_1 = building1;
+        Node temp_2 = building2;
+        String match = "Similar";
+        if(temp_1==null || temp_2==null){
+            return null;
+        }
+        while(temp_1!=null || temp_2!=null){
+            if((temp_1!=null && temp_2==null) || (temp_2!=null && temp_1==null)){
+                match = "Not Similar";
+                break;
+            }
+            if(!temp_1.elem.equals(temp_2.elem)){
+                match = "Not Similar";
+                break;
+            }
+            else{
+                 match = "Similar";
+            }
+            temp_1 = temp_1.next;
+            temp_2 = temp_2.next;
+        }
+        return match;
+    }
+
+//Assignment Task-2
+
+public static Node organizeBooks(Node head, Integer[] popularity) { 
+        //TO DO
+        boolean switchingPlaces = true;
+        int temp_arr = 0;
+
+        while(switchingPlaces){
+          int idx = 0;
+          Node curr = head; 
+          Node nextNode = head.next;
+          Node prev = null;
+          while(curr!=null && curr.next!=null && idx<popularity.length-1){
+              if(popularity[idx]<popularity[idx+1]){
+                  curr.next = nextNode.next;//
+                  nextNode.next = curr;                  
+                  if(idx==0){
+                    head = nextNode;
+                  }
+                  else{
+                    prev.next = nextNode;
+                  }
+                  prev = nextNode;
+                    
+                  temp_arr = popularity[idx];
+                  popularity[idx] = popularity[idx+1];
+                  popularity[idx+1] = temp_arr;
+                    
+                  nextNode = curr.next;
+                  switchingPlaces = true;
+              }
+              else{
+                switchingPlaces = false;
+                prev = curr;
+                curr = curr.next;
+                nextNode = curr.next;
+              } 
+              idx++;
+          }
+        }
+        return head;
+    }
+
+
+
+//Assignment Task-3
+
+public static Node alternateMerge( Node head1, Node head2 ){
+        Node curr1 = head1;
+        Node curr2 = head2;
+        while(curr1!=null && curr2!=null){
+            Node temp = curr2;
+            Node tail = curr1.next;
+            curr2 = curr2.next;
+            temp.next = tail;
+            curr1.next = temp;
+            curr1 = tail;
+        }
+        head2 = null;  
+        return head1;
+    }
+
+
+
+//Assignment Task-4
+
+public static Node idGenerator(Node head1, Node head2, Node head3) { 
+      Node curr1 = head1;
+      Node curr2 = head2;
+      Node curr3 = head3;
+      Node tail =head1;
+      Node prev = null;
+
+      while(curr1!=null){
+        Node newNode = curr1.next;
+        curr1.next = prev;
+        prev = curr1;
+        curr1 = newNode;
+      }
+       head1 = prev;
+       Node temp = new Node (null);
+       while(curr2!=null && curr3!=null){
+         int num = (Integer)curr3.elem + (Integer)curr2.elem;
+         if(num>=10){
+            num %= 10;
+         }
+         temp = new Node(num);
+         tail.next = temp;
+         tail = temp;
+         curr2 = curr2.next;
+         curr3 = curr3.next;
+       }
+       return head1; 
+    }
+
+
+//Lab - 3
+
+//Assignment Task-5
+
+
+public static void sumOddAppend(Node dh) {
+        // TO DO
+        Node prev = dh;
+        Node curr = dh.next;
+        int sum = 0;
+        Node temp = null;
+        while(curr!=dh){
+            if((Integer)curr.elem%2!=0){
+                sum += (Integer)curr.elem;
+                temp = new Node(sum);
+                prev.next = curr.next;
+            }
+            prev = curr;
+            curr = curr.next;
+            if(curr.next==dh){
+                curr.next = temp;
+                temp.next = dh;
+                break;
+            }
+        }
+    }
+
+
+//Assignment Task-6
+
+public static void pairJoin(DNode dh1, DNode dh2) {
+        // TO DO
+        DNode curr1 = dh1.next;
+        DNode curr2 = dh2.next;
+        DNode temp1 = null;
+        DNode temp2 = null;
+        while(curr1!=null && curr2!=null){
+            temp1 = curr1.next;
+            temp2 = curr2.next;
+            curr1.next = curr2;
+            curr2.prev = curr1;
+            if(temp2==null){
+                curr2.next =dh1;
+                dh1.prev = curr2;
+                break;
+            }
+            curr2.next = temp1;
+            temp1.prev = curr2;
+            curr2 = temp2;
+            curr1 = temp1;
+        }
+    }
+
+
+//Assignment Task-7
+
+public static void rangeMove(DNode dh, int start, int end) {
+        // TO DO
+        DNode last = dh.prev;
+        DNode original_last = dh.prev;
+        DNode temp = null;
+        boolean inRange = true;
+
+        while(inRange){
+            DNode curr = dh.next;
+            DNode successor = curr.next;
+            DNode predecessor = curr.prev;
+            while(curr!=original_last.next){
+                if((Integer)curr.elem>=start && (Integer)curr.elem<=end){
+                    temp = curr;
+                    predecessor.next = successor;
+                    successor.prev = predecessor;
+
+                    curr = curr.next;
+                    successor = curr.next;
+                    predecessor = curr.prev;
+            
+
+                    last.next = temp;
+                    temp.prev = last;
+                    dh.prev = temp;
+                    temp.next = dh;
+                    last = temp;
+                    inRange = true;
+                }
+                else{
+                    inRange = false;
+                    curr = curr.next;
+                    successor = curr.next;
+                    predecessor = curr.prev;
+                }
+            }
+        }
+    }
